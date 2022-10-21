@@ -1,0 +1,23 @@
+{
+  "name": "cypress",
+  "version": "1.0.0",
+  "description": "\"Testing con Cypress\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open --browser chrome --e2e",
+    "test:headless:chrome":"cypress run --browser chrome --spec cypress/e2e/interactuandoConElementos.cy.js" 
+  },
+  "keywords": [
+    "testing",
+    "cypress",
+    "javascript"
+  ],
+  "author": "JohannCode",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^10.9.0"
+  },
+  "dependencies": {
+    "prettier": "^2.7.1"
+  }
+}
