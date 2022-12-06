@@ -5,7 +5,7 @@ module.exports = defineConfig({
   viewportHeight: 1080,
 
   e2e: {
-    baseUrl:"https://www-takifua1.vercel.app/",
+    baseUrl:"https://www.diluccatogo.com/",
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on('task', {
@@ -14,11 +14,6 @@ module.exports = defineConfig({
           return null
         }
       })
-    },
-    excludeSpecPattern: [
-      "cypress/e2e/1-getting-started/*.js",
-      "cypress/e2e/2-advanced-examples/*.js",
-    ]
-
+    }
   },
 });
