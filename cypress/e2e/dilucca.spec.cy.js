@@ -53,7 +53,7 @@ describe('prueba de sitio web de Dilucca', () => {
     })
     cy.visit('/')
   })
-  //Registro e ingreso con redes sociales 
+  //Registro e ingreso con redes sociales
   it('Registro e ingreso con redes sociales ', () => {
     cy.get('div:nth-child(2) > ul > div > li > a').each(($el, index, $list) => {
       let url = $el.attr('href')
@@ -63,8 +63,6 @@ describe('prueba de sitio web de Dilucca', () => {
     })
     cy.visit('/')
   })
-
-
 
   //caso 4
   it('login dilucca', () => {
@@ -79,11 +77,25 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get('.logout-label').click()
   })
 
-  // Iconos de redes sociales 
-  it.only('Iconos de redes sociales ',()=>{
-    cy.get('[href="https://www.facebook.com/diluccatogo"] > .fab').should('exist')
-    cy.get('[href="https://www.instagram.com/di_lucca_togo/"] > .fab').should('exist')
+  // Iconos de redes sociales
+  it('Iconos de redes sociales ', () => {
+    cy.get('[href="https://www.facebook.com/diluccatogo"] > .fab').should(
+      'exist'
+    )
+    cy.get('[href="https://www.instagram.com/di_lucca_togo/"] > .fab').should(
+      'exist'
+    )
     cy.get('[href="https://www.facebook.com/diluccatogo"] > .fab').click()
     cy.get('[href="https://www.instagram.com/di_lucca_togo/"] > .fab').click()
   })
+
+  //Logo
+  it.only('Logo', () => {
+    cy.get('.router-main-logo > .v-image > .v-responsive__content').should(
+      'exist'
+    )
+    cy.get('.router-main-logo > .v-image > .v-responsive__content').click()
+  })
+  //Favicon
+  it('Favicon', () => {})
 })
