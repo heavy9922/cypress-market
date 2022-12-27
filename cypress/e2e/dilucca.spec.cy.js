@@ -1,4 +1,5 @@
 /// <references types="Cypress"/>
+const icons = require('@cypress/icons')
 
 describe('prueba de sitio web de Dilucca', () => {
   beforeEach(() => {
@@ -6,20 +7,24 @@ describe('prueba de sitio web de Dilucca', () => {
   })
   //URL
   it('URL', () => {
-    cy.url().should('contain', 'https://www.diluccatogo.com/')
+    let urlComfirm = Cypress.env('urlComfirm')
+    cy.url().should('contain', `${urlComfirm}`)
   })
   //URL SEGURIDAD (s)
   it('URL SEGURIDAD (s)', () => {
-    cy.url().should('contain', 'https')
+    let ssl = Cypress.env('ssl')
+    cy.url().should('contain', `${ssl}`)
   })
   // Caso 1
   it('Existe tilulo', () => {
-    cy.title().should('include', 'Di Lucca To Go - Inicio')
+    let titleSite = Cypress.env('titleSite')
+    cy.title().should('include', `${titleSite}`)
   })
   // Caso 2
   it('Funcionalidad Banners ', () => {
+    let BannersCount = Cypress.env('BannersCount')
     cy.get('.all-content-link').should('exist')
-    cy.get('.all-content-link').should('have.length', 5)
+    cy.get('.all-content-link').should('have.length', BannersCount)
   })
   //caso 3
   it('probando url del carrusel', () => {
@@ -66,10 +71,13 @@ describe('prueba de sitio web de Dilucca', () => {
 
   //caso 4
   it('login dilucca', () => {
+    let username = Cypress.env('username')
+    let password = Cypress.env('password')
     cy.get('.button-user-icon > .v-btn__content > .fas').click()
-    cy.get('#list-item-238 > div > a').click()
-    cy.get('#input-255').type('prueba2@gmail.com')
-    cy.get('#input-258').type('xxxxx1')
+    // cy.get('#list-item-238 > div > a').click()
+    cy.get('#list-item-226 > .v-list-item__title > a').click()
+    cy.get('#input-243').type(username)
+    cy.get('#input-246').type(password)
     cy.get('.mt-1 > .v-btn__content').click()
     // cy.get('.btn-modal > .v-btn__content').click()
     cy.wait(2000)
@@ -79,23 +87,72 @@ describe('prueba de sitio web de Dilucca', () => {
 
   // Iconos de redes sociales
   it('Iconos de redes sociales ', () => {
-    cy.get('[href="https://www.facebook.com/diluccatogo"] > .fab').should(
-      'exist'
-    )
-    cy.get('[href="https://www.instagram.com/di_lucca_togo/"] > .fab').should(
-      'exist'
-    )
-    cy.get('[href="https://www.facebook.com/diluccatogo"] > .fab').click()
-    cy.get('[href="https://www.instagram.com/di_lucca_togo/"] > .fab').click()
+    let face = Cypress.env('urlFacebook')
+    let insta = Cypress.env('urlInstagram')
+    cy.get(`[href="${face}"] > .fab`).should('exist')
+    cy.get(`[href="${insta}"] > .fab`).should('exist')
+    cy.get(`[href="${face}"] > .fab`).click()
+    cy.get(`[href="${insta}"] > .fab`).click()
   })
 
   //Logo
-  it.only('Logo', () => {
+  it('Logo', () => {
     cy.get('.router-main-logo > .v-image > .v-responsive__content').should(
       'exist'
     )
     cy.get('.router-main-logo > .v-image > .v-responsive__content').click()
   })
   //Favicon
-  it('Favicon', () => {})
+  it('Favicon', () => {
+    let favicon = Cypress.env('favicon')
+    icons.getPathToFavicon(favicon)
+    icons.getPathToIcon(favicon)
+    cy.log(icons.getPathToTray(favicon))
+  })
+  //servicios
+  it.only('servicios', () => {
+    let adress = Cypress.env('adress')
+    let neighborhood = Cypress.env('neighborhood')
+    //domicilios
+    cy.get('.underline > .v-btn__content').click()
+    cy.get(
+      '.col > .btn-bg-combobox-tservice > .v-btn__content > .title-type-service'
+    ).click()
+    cy.get(
+      '.col.col-12 > .row > .col-sm-3 > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections'
+    ).click()
+    cy.get('.v-list-item__title').click()
+    cy.get('#input-247').type(adress)
+    cy.get('#input-250').type(neighborhood)
+    cy.get(
+      '.col.col-12 > .row > .hidden-sm-and-down > .trigger-search-wrapper > .search-desktop > .v-btn__content'
+    ).click()
+    cy.get('.continue > .v-btn__content').click()
+    // cy.wait(2000)
+    cy.visit('/')
+    //recoger en tienda
+    cy.get('.underline > .v-btn__content').click()
+    cy.get(
+      '.col-12 > .btn-bg-combobox-tservice > .v-btn__content > .title-type-service'
+    ).click()
+    cy.get(
+      '.mt-2 > .no-gutters > .col-sm-3 > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections'
+    ).click()
+    cy.get('.v-list-item__title').click()
+    cy.get(
+      ':nth-child(3) > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections > .v-select__selection'
+    ).click()
+    cy.get(
+      '#list-item-310-3 > .v-list-item__content > .v-list-item__title'
+    ).click()
+    cy.get(
+      '.mt-2 > .no-gutters > .hidden-sm-and-down > .trigger-search-wrapper > .search-desktop > .v-btn__content'
+    ).click()
+  })
+  // buscador o lupa
+  it('buscador o lupa', () => {
+    let find = Cypress.env('find')
+    cy.get('.fade-search > .v-btn__content > .fas').click()
+    cy.get('#input-227').type(`${find}{enter}`)
+  })
 })
