@@ -5,29 +5,30 @@ describe('prueba de sitio web de Dilucca', () => {
   beforeEach(() => {
     cy.visit('/')
   })
+  //TODO:Parte 1
   //URL
   it('URL', () => {
     let urlComfirm = Cypress.env('urlComfirm')
     cy.url().should('contain', `${urlComfirm}`)
   })
   //URL SEGURIDAD (s)
-  it('URL SEGURIDAD (s)', () => {
+  it('URL SEGURIDAD (s) PT1', () => {
     let ssl = Cypress.env('ssl')
     cy.url().should('contain', `${ssl}`)
   })
   // Caso 1
-  it('Existe tilulo', () => {
+  it('Existe tilulo PT1', () => {
     let titleSite = Cypress.env('titleSite')
     cy.title().should('include', `${titleSite}`)
   })
   // Caso 2
-  it('Funcionalidad Banners ', () => {
+  it('Funcionalidad Banners PT1 ', () => {
     let BannersCount = Cypress.env('BannersCount')
     cy.get('.all-content-link').should('exist')
     cy.get('.all-content-link').should('have.length', BannersCount)
   })
   //caso 3
-  it('probando url del carrusel', () => {
+  it('probando url del carrusel PT1', () => {
     cy.get('.v-image > .v-responsive__content > a').each(
       ($el, index, $list) => {
         let url = $el.attr('href')
@@ -40,7 +41,7 @@ describe('prueba de sitio web de Dilucca', () => {
     )
   })
   //TyC footer
-  it('TyC footer', () => {
+  it('TyC footer PT1', () => {
     let year = new Date().getFullYear()
     cy.get('.title-links-footer > h4').should(
       'have.text',
@@ -49,7 +50,7 @@ describe('prueba de sitio web de Dilucca', () => {
   })
 
   //Politicas de privacidad
-  it('Politicas de privacidad', () => {
+  it('Politicas de privacidad PT1', () => {
     cy.get('div:nth-child(2) > ul > div > li > a').each(($el, index, $list) => {
       let url = $el.attr('href')
       cy.visit(`${url}`)
@@ -59,7 +60,7 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.visit('/')
   })
   //Registro e ingreso con redes sociales
-  it('Registro e ingreso con redes sociales ', () => {
+  it('Registro e ingreso con redes sociales PT1 ', () => {
     cy.get('div:nth-child(2) > ul > div > li > a').each(($el, index, $list) => {
       let url = $el.attr('href')
       cy.visit(`${url}`)
@@ -70,7 +71,7 @@ describe('prueba de sitio web de Dilucca', () => {
   })
 
   //caso 4
-  it('login dilucca', () => {
+  it('login dilucca PT1', () => {
     let username = Cypress.env('username')
     let password = Cypress.env('password')
     cy.get('.button-user-icon > .v-btn__content > .fas').click()
@@ -86,7 +87,7 @@ describe('prueba de sitio web de Dilucca', () => {
   })
 
   // Iconos de redes sociales
-  it('Iconos de redes sociales ', () => {
+  it('Iconos de redes sociales PT1 ', () => {
     let face = Cypress.env('urlFacebook')
     let insta = Cypress.env('urlInstagram')
     cy.get(`[href="${face}"] > .fab`).should('exist')
@@ -96,21 +97,21 @@ describe('prueba de sitio web de Dilucca', () => {
   })
 
   //Logo
-  it('Logo', () => {
+  it('Logo PT1', () => {
     cy.get('.router-main-logo > .v-image > .v-responsive__content').should(
       'exist'
     )
     cy.get('.router-main-logo > .v-image > .v-responsive__content').click()
   })
   //Favicon
-  it('Favicon', () => {
+  it('Favicon PT1', () => {
     let favicon = Cypress.env('favicon')
     icons.getPathToFavicon(favicon)
     icons.getPathToIcon(favicon)
     cy.log(icons.getPathToTray(favicon))
   })
   //servicios
-  it.only('servicios', () => {
+  it('servicios PT1', () => {
     let adress = Cypress.env('adress')
     let neighborhood = Cypress.env('neighborhood')
     //domicilios
@@ -150,9 +151,65 @@ describe('prueba de sitio web de Dilucca', () => {
     ).click()
   })
   // buscador o lupa
-  it('buscador o lupa', () => {
+  it('buscador o lupa PT1', () => {
     let find = Cypress.env('find')
     cy.get('.fade-search > .v-btn__content > .fas').click()
     cy.get('#input-227').type(`${find}{enter}`)
+  })
+  //TODO:parte 2
+  //categorias
+  it('categorias PT2', () => {
+    cy.get(
+      'div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div > div > div.v-responsive__content > a'
+    ).should('have.length', 19)
+    cy.get(
+      'div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div > div > div.v-responsive__content > a'
+    ).each(($el, index, $list) => {
+      let url = $el.attr('href')
+      if (url) {
+        cy.visit(`${url}`)
+        // cy.wait(3000)
+        cy.url().should('contain', `${url}`)
+        cy.get('.breadcumb-custom > ul > li').each(($el, index, $list) => {
+          let migaPan = $el.text()
+          if (migaPan && migaPan !== '>') {
+            cy.log(migaPan)
+            cy.get('.breadcumb-custom > ul > li').should('exist')
+            cy.get('.pl-2 >').each(($el, index, $list) => {
+              cy.get(
+                `:nth-child(${
+                  index + 1
+                }) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > a > .name_product`
+              ).should('exist')
+              cy.get(
+                `:nth-child(${
+                  index + 1
+                }) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > a > .mb-2`
+              ).should('exist')
+            })
+          }
+        })
+      }
+    })
+    // cy.visit('/')
+  })
+  it.only('modifidores de cantidad', () => {
+    cy.get(
+      'div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div > div > div.v-responsive__content > a'
+    ).each(($el, index, $list) => {
+      let url = $el.attr('href')
+      if (url) {
+        cy.visit(`${url}`)
+        cy.url().should('contain', `${url}`)
+        cy.get(
+          ':nth-child(1) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > .pt-1 > .add-or-next-step'
+        ).click()
+        cy.get('#expansion-custom-header').click()
+        cy.get(
+          ':nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+        ).click()
+        cy.wait(300000)
+      }
+    })
   })
 })
