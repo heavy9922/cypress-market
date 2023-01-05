@@ -4,6 +4,14 @@ const icons = require('@cypress/icons')
 describe('prueba de sitio web de Dilucca', () => {
   beforeEach(() => {
     cy.visit('/')
+    let username = Cypress.env('username')
+    let password = Cypress.env('password')
+    cy.get('.button-user-icon > .v-btn__content > .fas').click()
+    // cy.get('#list-item-238 > div > a').click()
+    cy.get('#list-item-228 > .v-list-item__title > a').click()
+    cy.get('#input-245').type(username)
+    cy.get('#input-248').type(password)
+    cy.get('.mt-1 > .v-btn__content').click()
   })
   //TODO:Parte 1
   //URL
@@ -156,7 +164,7 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get('.fade-search > .v-btn__content > .fas').click()
     cy.get('#input-227').type(`${find}{enter}`)
   })
-  //TODO:parte 2
+  //TODO: parte 2
   //categorias
   it('categorias PT2', () => {
     cy.get(
@@ -193,23 +201,27 @@ describe('prueba de sitio web de Dilucca', () => {
     })
     // cy.visit('/')
   })
-  it.only('modifidores de cantidad', () => {
+  it('modifidores de cantidad', () => {
     cy.get(
-      'div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div > div > div.v-responsive__content > a'
-    ).each(($el, index, $list) => {
-      let url = $el.attr('href')
-      if (url) {
-        cy.visit(`${url}`)
-        cy.url().should('contain', `${url}`)
-        cy.get(
-          ':nth-child(1) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > .pt-1 > .add-or-next-step'
-        ).click()
-        cy.get('#expansion-custom-header').click()
-        cy.get(
-          ':nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
-        ).click()
-        cy.wait(300000)
-      }
-    })
+      ':nth-child(1) > :nth-child(1) > :nth-child(2) > .inner > .v-image > .v-responsive__sizer'
+    ).click()
+    cy.get('.add-or-next-step > .v-btn__content').click()
+    cy.wait(4000)
+    cy.get('.v-snack__content').should('be.visible')
+    cy.go('back')
   })
+  //TODO: parte 3
+  it.only('menu de hamburguesa PT3', () => {
+    cy.wait(3000)
+    cy.get('.fa-ellipsis-v').click()
+    // cy.log(cy.get('#input-187').should('exits'))
+    // cy.get('#input-221').should('exits')
+    cy.get('#input-221').type('pizza{enter}')
+    cy.get('.fa-ellipsis-v').click()
+    cy.get(':nth-child(1) > .main-subtitle').click()
+    cy.get('.fa-ellipsis-v').click()
+    cy.get('.logout-label').click()
+  })
+  //TODO: parte 4 
+  
 })
