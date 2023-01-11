@@ -20,7 +20,7 @@ module.exports = defineConfig({
     urlComfirm: 'https://www.diluccatogo.com/',
     ssl: 'https',
     titleSite: 'Di Lucca To Go - Inicio',
-    BannersCount: 4,
+    BannersCount: 3,
     username: 'prueba2@gmail.com',
     password: 'xxxxx1',
     urlFacebook: 'https://www.facebook.com/diluccatogo',
