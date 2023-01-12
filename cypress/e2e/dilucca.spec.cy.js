@@ -4,14 +4,6 @@ const icons = require('@cypress/icons')
 describe('prueba de sitio web de Dilucca', () => {
   beforeEach(() => {
     cy.visit('/')
-    // let username = Cypress.env('username')
-    // let password = Cypress.env('password')
-    // cy.get('.button-user-icon > .v-btn__content > .fas').click()
-    // // cy.get('#list-item-238 > div > a').click()
-    // cy.get('#list-item-221 > .v-list-item__title > a').click()
-    // cy.get('#input-238').type(username)
-    // cy.get('#input-241').type(password)
-    // cy.get('.mt-1 > .v-btn__content').click()
   })
   //TODO:Parte 1
   //URL
@@ -84,8 +76,8 @@ describe('prueba de sitio web de Dilucca', () => {
     let insta = Cypress.env('urlInstagram')
     cy.get(`[href="${face}"] > .fab`).should('exist')
     cy.get(`[href="${insta}"] > .fab`).should('exist')
-    cy.get(`[href="${face}"] > .fab`).click()
-    cy.get(`[href="${insta}"] > .fab`).click()
+    // cy.get(`[href="${face}"] > .fab`).click()
+    // cy.get(`[href="${insta}"] > .fab`).click()
   })
 
   //Logo
@@ -111,19 +103,22 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get(
       '.col > .btn-bg-combobox-tservice > .v-btn__content > .title-type-service'
     ).click()
-    cy.get(
-      ':nth-child(2) > .directions-card > .v-card__actions > .selected-button'
-    ).click()
-    // cy.get('.v-list-item__title').click()
-    // cy.get('#input-247').type(adress)
-    // cy.get('#input-250').type(neighborhood)
     // cy.get(
-    //   '.col.col-12 > .row > .hidden-sm-and-down > .trigger-search-wrapper > .search-desktop > .v-btn__content'
+    //   ':nth-child(2) > .directions-card > .v-card__actions > .selected-button'
     // ).click()
-    // cy.get('.continue > .v-btn__content').click()
-    // cy.wait(2000)
+    cy.get(
+      '.col.col-12 > .row > .col-sm-3 > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections'
+    ).click()
+    cy.get('#list-item-291-0 > .v-list-item__content').click()
+    cy.get('#input-242').type(adress)
+    cy.get('#input-245').type(neighborhood)
+    cy.get(
+      '.col.col-12 > .row > .hidden-sm-and-down > .trigger-search-wrapper > .search-desktop > .v-btn__content'
+    ).click()
+    cy.get('.continue > .v-btn__content').click()
+    cy.wait(2000)
     cy.visit('/')
-    // //recoger en tienda
+    //recoger en tienda
     cy.get('.underline > .v-btn__content').click()
     cy.get(
       '.col-12 > .btn-bg-combobox-tservice > .v-btn__content > .title-type-service'
@@ -131,11 +126,13 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get(
       '.mt-2 > .no-gutters > .col-sm-3 > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections'
     ).click()
-    cy.get('#list-item-289-0 > .v-list-item__content').click()
+    cy.get('#list-item-291-0 > .v-list-item__content').click()
     cy.get(
       ':nth-child(3) > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections > .v-select__selection'
     ).click()
-    cy.get('#list-item-304-1 > .v-list-item__content').click()
+    cy.get(
+      '#list-item-306-0 > .v-list-item__content > .v-list-item__title'
+    ).click()
     cy.get(
       '.mt-2 > .no-gutters > .hidden-sm-and-down > .trigger-search-wrapper > .search-desktop > .v-btn__content'
     ).click()
@@ -144,57 +141,65 @@ describe('prueba de sitio web de Dilucca', () => {
   it('buscador o lupa PT1', () => {
     let find = Cypress.env('find')
     cy.get('.fade-search > .v-btn__content > .fas').click()
-    cy.get('#input-260').type(`${find}{enter}`)
+    cy.get('#input-222').type(`${find}{enter}`)
     cy.visit('/')
   })
   //TODO: parte 2
   //categorias
-  it('categorias PT2', () => {
-    cy.get(
-      'div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div > div > div.v-responsive__content > a'
-    ).should('have.length', 18)
-    cy.get(
-      'div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div > div > div.v-responsive__content > a'
-    ).each(($el, index, $list) => {
-      let url = $el.attr('href')
-      if (url) {
-        cy.visit(`${url}`)
-        // cy.wait(3000)
-        cy.url().should('contain', `${url}`)
-        cy.get('.breadcumb-custom > ul > li').each(($el, index, $list) => {
-          let migaPan = $el.text()
-          if (migaPan && migaPan !== '>') {
-            cy.log(migaPan)
-            cy.get('.breadcumb-custom > ul > li').should('exist')
-            cy.get('.pl-2 >').each(($el, index, $list) => {
-              cy.get(
-                `:nth-child(${
-                  index + 1
-                }) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > a > .name_product`
-              ).should('exist')
-              cy.get(
-                `:nth-child(${
-                  index + 1
-                }) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > a > .mb-2`
-              ).should('exist')
-            })
-          }
-        })
-      }
-    })
-    cy.visit('/')
-  })
-  it('modifidores de cantidad', () => {
-    cy.get(
-      ':nth-child(1) > :nth-child(1) > :nth-child(2) > .inner > .v-image > .v-responsive__sizer'
-    ).click()
-    cy.get('.add-or-next-step > .v-btn__content').click()
-    cy.wait(4000)
-    cy.get('.v-snack__content').should('be.visible')
-    cy.go('back')
-  })
+  // it('categorias PT2', () => {
+  //   cy.get(
+  //     'div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div > div > div.v-responsive__content > a'
+  //   ).should('have.length', 19)
+  //   cy.get(
+  //     'div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div > div > div.v-responsive__content > a'
+  //   ).each(($el, index, $list) => {
+  //     let url = $el.attr('href')
+  //     if (url) {
+  //       cy.visit(`${url}`)
+  //       // cy.wait(3000)
+  //       cy.url().should('contain', `${url}`)
+  //       cy.get('.breadcumb-custom > ul > li').each(($el, index, $list) => {
+  //         let migaPan = $el.text()
+  //         if (migaPan && migaPan !== '>') {
+  //           cy.log(migaPan)
+  //           cy.get('.breadcumb-custom > ul > li').should('exist')
+  //           cy.get('.pl-2 >').each(($el, index, $list) => {
+  //             cy.get(
+  //               `:nth-child(${
+  //                 index + 1
+  //               }) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > a > .name_product`
+  //             ).should('exist')
+  //             cy.get(
+  //               `:nth-child(${
+  //                 index + 1
+  //               }) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > a > .mb-2`
+  //             ).should('exist')
+  //           })
+  //         }
+  //       })
+  //     }
+  //   })
+  //   cy.visit('/')
+  // })
+  // it.only('modifidores de cantidad', () => {
+  //   cy.get(
+  //     ':nth-child(1) > :nth-child(1) > :nth-child(2) > .inner > .v-image > .v-responsive__sizer'
+  //   ).click()
+  //   cy.get('.add-or-next-step > .v-btn__content').click()
+  //   cy.wait(4000)
+  //   cy.get('.v-snack__content').should('be.visible')
+  //   cy.go('back')
+  // })
   //TODO: parte 3
   it('menu de hamburguesa PT3', () => {
+    let username = Cypress.env('username')
+    let password = Cypress.env('password')
+    cy.get('.button-user-icon > .v-btn__content > .fas').click()
+    // cy.get('#list-item-238 > div > a').click()
+    cy.get('#list-item-221').click()
+    cy.get('#input-238').type(username)
+    cy.get('#input-241').type(password)
+    cy.get('.mt-1 > .v-btn__content').click()
     cy.wait(3000)
     cy.get('.fa-ellipsis-v').click()
     // cy.log(cy.get('#input-187').should('exits'))
@@ -206,11 +211,30 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get('.logout-label').click()
   })
   //TODO: parte 4
-  it.only('Carrito PT4', () => {
+  it('Carrito PT4', () => {
+    //login
+    let users = Cypress.env('username')
+    let passwd = Cypress.env('password')
+    cy.get('.button-user-icon > .v-btn__content > .fas').click()
+    cy.get('#list-item-221 > .v-list-item__title').click()
+    cy.get('#input-238').type(users)
+    cy.get('#input-241').type(passwd)
+    cy.get('.mt-1 > .v-btn__content').click()
+    // //recoger en tienda
+    // cy.get('.underline > .v-btn__content').click()
+    // cy.get('.col-12 > .btn-bg-combobox-tservice > .v-btn__content').click()
+    // cy.get(
+    //   '.mt-2 > .no-gutters > .col-sm-3 > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections'
+    // ).click()
+    // cy.get('#list-item-450-0 > .v-list-item__content').click()
+    // cy.get(
+    //   '.mt-2 > .no-gutters > .hidden-sm-and-down > .trigger-search-wrapper > .search-desktop > .v-btn__content'
+    // ).click()
     //primer producto
     cy.get(
-      ':nth-child(4) > :nth-child(1) > :nth-child(2) > .inner > .v-image > .v-responsive__sizer'
+      ':nth-child(3) > :nth-child(1) > :nth-child(2) > .inner > .v-image > .v-responsive__sizer'
     ).click()
+
     cy.get(
       ':nth-child(1) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > .pt-1 > .add-or-next-step > .v-btn__content'
     ).click()
@@ -224,8 +248,30 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get(
       '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
     ).click()
+    cy.get(
+      ':nth-child(3) > #expansion-custom-header > .title-modifiers'
+    ).click()
+    cy.get(
+      '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+    ).click()
+    cy.get(
+      ':nth-child(4) > #expansion-custom-header > .title-modifiers'
+    ).click()
+    cy.get(
+      '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+    ).click()
+    cy.get(
+      ':nth-child(5) > #expansion-custom-header > .title-modifiers'
+    ).click()
+    cy.get(
+      '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+    ).click()
+    cy.get(
+      ':nth-child(5) > #expansion-custom-header > .title-modifiers'
+    ).click()
     // cy.get('#input-833').type('sin queso')
     cy.get('.add-or-next-step > .v-btn__content').click()
+
     cy.wait(4000)
     cy.visit('/')
     //segundo producto
@@ -272,8 +318,9 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get('.pt-2').click()
     cy.get('.see-products').click()
     cy.get(
-      ':nth-child(4) > :nth-child(1) > :nth-child(2) > .inner > .v-image > .v-responsive__sizer'
+      ':nth-child(3) > :nth-child(1) > :nth-child(2) > .inner > .v-image > .v-responsive__sizer'
     ).click()
+
     cy.get(
       ':nth-child(1) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > .pt-1 > .add-or-next-step > .v-btn__content'
     ).click()
@@ -283,12 +330,34 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get(
       ':nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
     ).click()
-    cy.get('[aria-expanded="false"] > #expansion-custom-header').click()
+    cy.get(':nth-child(2) > #expansion-custom-header').click()
     cy.get(
       '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
     ).click()
+    cy.get(
+      ':nth-child(3) > #expansion-custom-header > .title-modifiers'
+    ).click()
+    cy.get(
+      '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+    ).click()
+    cy.get(
+      ':nth-child(4) > #expansion-custom-header > .title-modifiers'
+    ).click()
+    cy.get(
+      '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+    ).click()
+    cy.get(
+      ':nth-child(5) > #expansion-custom-header > .title-modifiers'
+    ).click()
+    cy.get(
+      '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+    ).click()
+    cy.get(
+      ':nth-child(5) > #expansion-custom-header > .title-modifiers'
+    ).click()
     // cy.get('#input-833').type('sin queso')
     cy.get('.add-or-next-step > .v-btn__content').click()
+
     cy.wait(4000)
     cy.visit('/')
     cy.get(
@@ -300,4 +369,14 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get('.relative > .car-container > .fas').click()
     cy.get(':nth-child(2) > .continue').click()
   })
+
+  // it('login',()=>{
+  //   let users = Cypress.env('username')
+  //   let passwd = Cypress.env('password')
+  //   cy.get('.button-user-icon > .v-btn__content > .fas').click()
+  //   cy.get('#list-item-402 > .v-list-item__title > a').click()
+  //   cy.get('#input-446').type(users)
+  //   cy.get('#input-449').type(passwd)
+  //   cy.get('.mt-1 > .v-btn__content').click()
+  // })
 })
