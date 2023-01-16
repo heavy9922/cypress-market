@@ -181,9 +181,9 @@ describe('prueba de sitio web de Dilucca', () => {
   //   })
   //   cy.visit('/')
   // })
-  // it.only('modifidores de cantidad', () => {
+  // it('modifidores de cantidad', () => {
   //   cy.get(
-  //     ':nth-child(1) > :nth-child(1) > :nth-child(2) > .inner > .v-image > .v-responsive__sizer'
+  //     ':nth-child(2) > :nth-child(1) > :nth-child(2) > .inner > .v-image > .v-responsive__sizer'
   //   ).click()
   //   cy.get('.add-or-next-step > .v-btn__content').click()
   //   cy.wait(4000)
@@ -211,7 +211,7 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get('.logout-label').click()
   })
   //TODO: parte 4
-  it.only('Carrito PT4', () => {
+  it('Carrito PT4', () => {
     //login
     let users = Cypress.env('username')
     let passwd = Cypress.env('password')
@@ -220,16 +220,6 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get('#input-238').type(users)
     cy.get('#input-241').type(passwd)
     cy.get('.mt-1 > .v-btn__content').click()
-    // //recoger en tienda
-    // cy.get('.underline > .v-btn__content').click()
-    // cy.get('.col-12 > .btn-bg-combobox-tservice > .v-btn__content').click()
-    // cy.get(
-    //   '.mt-2 > .no-gutters > .col-sm-3 > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections'
-    // ).click()
-    // cy.get('#list-item-450-0 > .v-list-item__content').click()
-    // cy.get(
-    //   '.mt-2 > .no-gutters > .hidden-sm-and-down > .trigger-search-wrapper > .search-desktop > .v-btn__content'
-    // ).click()
     //primer producto
     cy.get(
       ':nth-child(3) > :nth-child(1) > :nth-child(2) > .inner > .v-image > .v-responsive__sizer'
@@ -370,6 +360,8 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get(':nth-child(2) > .continue').click()
     // para que funcione la 5ta parte hay que ejecutar la 4ta parte
     // TODO:parte 5
+    cy.log('inicio de la parte 5')
+
     cy.get('.is-active').click()
     cy.get(
       '.mt-2 > .no-gutters > .col-sm-3 > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections'
@@ -385,13 +377,27 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get(
       ':nth-child(4) > .v-stepper__wrapper > .card-body-step-content > .v-card__text > .v-form > .mt-4 > .blue-linear-gradient > .v-btn__content'
     ).click()
-    cy.get(
-      '[aria-labelledby="input-605"] > :nth-child(2) > .py-0 > .v-radio > .v-label'
-    ).click()
+    cy.get('body').then((body) => {
+      if (
+        body.find(
+          '[aria-labelledby="input-600"] > :nth-child(2) > .py-0 > .v-radio > .v-label'
+        ).length > 0
+      ) {
+        cy.get(
+          '[aria-labelledby="input-600"] > :nth-child(2) > .py-0 > .v-radio > .v-label'
+        ).click()
+      } else {
+        cy.get(
+          '[aria-labelledby="input-605"] > :nth-child(2) > .py-0 > .v-radio > .v-label'
+        ).click()
+      }
+    })
     cy.get(
       ':nth-child(2) > .v-radio > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
     ).click()
-    cy.get('#input-681').type('121700')
+    cy.get(
+      '.sub-radio > :nth-child(1) > [style="height: auto;"] > .v-input--radio-group__input > :nth-child(2) > .py-0 > .v-input > .v-input__control > .v-input__slot'
+    ).type('121700')
     cy.get(
       '.electronic-bill > .v-input > .v-input__control > .v-input__slot > .v-input--radio-group__input > :nth-child(1) > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
     ).click()
@@ -399,16 +405,7 @@ describe('prueba de sitio web de Dilucca', () => {
       '.electronic-bill > .v-input > .v-input__control > .v-input__slot > .v-input--radio-group__input > :nth-child(1) > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
     ).click()
     cy.get(
-      '.last-step-content > .v-stepper__wrapper > .card-body-step-content > .v-card__text > .v-form > .mt-4 > .blue-linear-grad ient > .v-btn__content'
+      '.last-step-content > .v-stepper__wrapper > .card-body-step-content > .v-card__text > .v-form > .mt-4 > .blue-linear-gradient > .v-btn__content'
     ).click()
   })
-  // it('login',()=>{
-  //   let users = Cypress.env('username')
-  //   let passwd = Cypress.env('password')
-  //   cy.get('.button-user-icon > .v-btn__content > .fas').click()
-  //   cy.get('#list-item-402 > .v-list-item__title > a').click()
-  //   cy.get('#input-446').type(users)
-  //   cy.get('#input-449').type(passwd)
-  //   cy.get('.mt-1 > .v-btn__content').click()
-  // })
 })
