@@ -17,6 +17,7 @@ module.exports = defineConfig({
     },
   },
   env: {
+    comercio:'dilucca',
     urlComfirm: 'https://www.diluccatogo.com/',
     ssl: 'https',
     titleSite: 'Di Lucca To Go - Inicio',
@@ -29,5 +30,11 @@ module.exports = defineConfig({
     adress:'calle 46 sur #23a-26',
     neighborhood:'santa lucia',
     find: 'queso',
+    //facturacion
+    nameF:'yeferson castiblanco',
+    cityF:'Bogota',
+    phoneF:'3195393069',
+    documentF:'1033815760',
+    emailF:"yeferson.castiblanco@marketmix.com.co"
   },
 })
