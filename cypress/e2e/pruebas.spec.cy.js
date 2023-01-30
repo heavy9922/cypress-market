@@ -1,20 +1,22 @@
 describe('Find length and store in variable for usage in different tests', () => {
   let categorys
-  let cat = 1
-  let cat2 = 4
+  let cat = 0
+  let cat2 = 0
   let product
   let product2
-  let pro = 1
-  let pro2 = 1
+  let pro = 0
+  let pro2 = 0
   let modifier = 1
-  let modifier2 = 5
+  let modifier2 = 0
   beforeEach(() => {
     cy.visit('/')
   })
 
   it('count categories', () => {
     cy.get('body')
-      .find('.row-category-slider > .pt-0 > .row >')
+      .find(
+        `#app > div > main > div > div > div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div`
+      )
       .then(($value) => {
         categorys = $value.length
       })
@@ -33,8 +35,10 @@ describe('Find length and store in variable for usage in different tests', () =>
     cat2 = parseInt(cat2)
   })
   it('choose product', () => {
-    cy.wait(5000)
-    cy.get(`.row > :nth-child(${cat})`).click({ multiple: true })
+    cy.wait(1000)
+    cy.get(
+      `#app > div > main > div > div > div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div:nth-child(${cat})`
+    ).click()
     cy.get('body')
       .find('.pl-2>')
       .then(($value) => {
@@ -43,8 +47,10 @@ describe('Find length and store in variable for usage in different tests', () =>
     product = parseInt(product)
   })
   it('choose product 2', () => {
-    cy.wait(5000)
-    cy.get(`.row > :nth-child(${cat2})`).click({ multiple: true })
+    cy.wait(1000)
+    cy.get(
+      `#app > div > main > div > div > div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div:nth-child(${cat2})`
+    ).click()
     cy.get('body')
       .find('.pl-2>')
       .then(($value) => {
@@ -66,7 +72,9 @@ describe('Find length and store in variable for usage in different tests', () =>
   })
   it('choose modifier', () => {
     // cy.wait(5000)
-    cy.get(`.row > :nth-child(${cat})`).click()
+    cy.get(
+      `#app > div > main > div > div > div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div:nth-child(${cat})`
+    ).click()
     cy.log(
       `:nth-child(${pro}) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > .pt-1 > .add-or-next-step > .v-btn__content`
     )
@@ -99,7 +107,9 @@ describe('Find length and store in variable for usage in different tests', () =>
   })
   it('choose modifier2', () => {
     // cy.wait(5000)
-    cy.get(`.row > :nth-child(${cat2})`).click({ multiple: true })
+    cy.get(
+      `#app > div > main > div > div > div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div:nth-child(${cat2})`
+    ).click()
     cy.log(
       `:nth-child(${pro2}) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > .pt-1 > .add-or-next-step > .v-btn__content`
     )
@@ -141,7 +151,7 @@ describe('Find length and store in variable for usage in different tests', () =>
     cy.log(modifier, 'modi')
     cy.log(modifier2, 'modi2')
   })
-  it.only('page white', () => {
+  it('page white', () => {
     cy.wait(3000)
     //recoger en tienda
     cy.get('.underline > .v-btn__content').click()
@@ -307,7 +317,10 @@ describe('Find length and store in variable for usage in different tests', () =>
     cy.get(
       ':nth-child(1) > .container > .row > .footer-car.col-7 > [style="background-color: rgb(61, 76, 111); border-color: rgb(61, 76, 111);"] > .v-btn__content > .far'
     ).click()
-    cy.get('#input-437').type('sin fresas')
+    cy.get(
+      '.combobox-details > .v-input > .v-input__control > .v-input__slot'
+    ).type('sin fresas')
+    cy.wait(2000)
     cy.get('.add-or-next-step > .v-btn__content').click()
     cy.wait(1000)
     cy.get('.relative > .car-container > .fas').click()
