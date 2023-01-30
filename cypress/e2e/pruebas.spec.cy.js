@@ -459,5 +459,140 @@ describe('Find length and store in variable for usage in different tests', () =>
     cy.get('.relative > .car-container > .fas').click()
     cy.get('.pt-2').click()
     cy.get('.see-products').click()
+    // agregar productos al carrito
+    //primer producto
+    cy.wait(3000)
+    cy.get(
+      `#app > div > main > div > div > div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div:nth-child(${cat})`
+    ).click()
+    cy.get(
+      `:nth-child(${pro}) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > .pt-1 > .add-or-next-step > .v-btn__content`
+    ).click()
+    cy.wait(3000)
+    for (let i = 1; i <= modifier; i++) {
+      cy.get('body').then((body) => {
+        if (body.find(' #expansion-custom-header ').length > 0) {
+          cy.log('pan')
+          cy.get(`:nth-child(${i})> #expansion-custom-header`).click({
+            multiple: true,
+          })
+          cy.get(
+            '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+          ).click({ multiple: true })
+          // }
+        } else if (
+          body.find('.combobox-details > :nth-child(3) > :nth-child(2) >')
+            .length > 0
+        ) {
+          cy.log('2')
+          cy.get(
+            `.combobox-details > :nth-child(3) > :nth-child(2) > :nth-child(${i})`
+          ).click()
+          cy.get('body').then((body) => {
+            if (
+              body.find(
+                `#app > div.v-application--wrap > main > div > div > div > div.container.pa-0.container-products-screen.container--fluid > div:nth-child(3) > div > div.row.bg-transparent > div > div > div > div:nth-child(1) > div > div > div > div > div.combobox-details.detail-card.pl-7.pr-7.pt-7.col-sm-6.col-md-6.col-lg-6.col-xl-6.col-12 > div:nth-child(3) > div:nth-child(2) > :nth-child(${i})`
+              ).length > 0 &&
+              i < modifier
+            ) {
+              cy.get(`.v-list > :nth-child(1)`).click({ force: true })
+            } else if (body.find('#list-707'.length > 0)) {
+              cy.get('.v-list > :nth-child(1)').click({
+                multiple: true,
+                force: true,
+              })
+            }
+          })
+        } else {
+          cy.log('not found modifier')
+        }
+      })
+      if (modifier == i) {
+        cy.get('body').then((body) => {
+          if (body.find('.add-or-next-step > .v-btn__content').length > 0) {
+            cy.get('.add-or-next-step > .v-btn__content').click({
+              multiple: true,
+              force: true,
+            })
+          } else if (
+            body.find(
+              '[style="transform-origin: center top 0px;"] > .v-stepper__wrapper > .group-product-card-combo > .container > .bg-transparent > .combobox-details > .buttons-group > .add-or-next-step > .v-btn__content > .title'
+            ).length > 0
+          ) {
+            cy.get(
+              '[style="transform-origin: center top 0px;"] > .v-stepper__wrapper > .group-product-card-combo > .container > .bg-transparent > .combobox-details > .buttons-group > .add-or-next-step > .v-btn__content > .title'
+            ).click()
+          }
+        })
+      }
+    }
+    cy.wait(2000)
+    cy.visit('/')
+    //segundo producto
+    cy.wait(3000)
+    cy.get(
+      `#app > div > main > div > div > div.container.pa-0.container-category-component.container--fluid.with-banners > div > div > div > div:nth-child(${cat2})`
+    ).click()
+    cy.get(
+      `:nth-child(${pro2}) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > .pt-1 > .add-or-next-step > .v-btn__content`
+    ).click()
+    cy.wait(3000)
+    for (let i = 1; i <= modifier2; i++) {
+      cy.get('body').then((body) => {
+        if (body.find(' #expansion-custom-header ').length > 0) {
+          cy.log('pan')
+          cy.get(`:nth-child(${i})> #expansion-custom-header`).click()
+          cy.get(
+            '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+          ).click()
+          // }
+        } else if (
+          body.find('.combobox-details > :nth-child(3) > :nth-child(2) >')
+            .length > 0
+        ) {
+          cy.log('2')
+          cy.get(
+            `.combobox-details > :nth-child(3) > :nth-child(2) > :nth-child(${i})`
+          ).click()
+          cy.get('body').then((body) => {
+            if (
+              body.find(
+                `#app > div.v-application--wrap > main > div > div > div > div.container.pa-0.container-products-screen.container--fluid > div:nth-child(3) > div > div.row.bg-transparent > div > div > div > div:nth-child(1) > div > div > div > div > div.combobox-details.detail-card.pl-7.pr-7.pt-7.col-sm-6.col-md-6.col-lg-6.col-xl-6.col-12 > div:nth-child(3) > div:nth-child(2) > :nth-child(${i})`
+              ).length > 0 &&
+              i < modifier2
+            ) {
+              cy.get(`.v-list > :nth-child(1)`).click({ force: true })
+            } else if (body.find('#list-707'.length > 0)) {
+              cy.get('.v-list > :nth-child(1)').click({
+                multiple: true,
+                force: true,
+              })
+            }
+          })
+        } else {
+          cy.log('not found modifier')
+        }
+      })
+      if (modifier2 == i) {
+        cy.get('body').then((body) => {
+          if (body.find('.add-or-next-step > .v-btn__content').length > 0) {
+            cy.get('.add-or-next-step > .v-btn__content').click({
+              multiple: true,
+              force: true,
+            })
+          } else if (
+            body.find(
+              '[style="transform-origin: center top 0px;"] > .v-stepper__wrapper > .group-product-card-combo > .container > .bg-transparent > .combobox-details > .buttons-group > .add-or-next-step > .v-btn__content > .title'
+            ).length > 0
+          ) {
+            cy.get(
+              '[style="transform-origin: center top 0px;"] > .v-stepper__wrapper > .group-product-card-combo > .container > .bg-transparent > .combobox-details > .buttons-group > .add-or-next-step > .v-btn__content > .title'
+            ).click()
+          }
+        })
+      }
+    }
+    cy.wait(2000)
+    cy.visit('/')
   })
 })
