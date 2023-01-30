@@ -381,9 +381,9 @@ describe('Find length and store in variable for usage in different tests', () =>
     cy.get(
       ':nth-child(1) > .container > .row > .footer-car.col-7 > [style="background-color: rgb(61, 76, 111); border-color: rgb(61, 76, 111);"] > .v-btn__content > .far'
     ).click()
-    cy.get(
-      '.combobox-details > .v-input > .v-input__control > .v-input__slot'
-    ).type('sin fresas')
+    // cy.get(
+    //   '.combobox-details > .v-input > .v-input__control > .v-input__slot'
+    // ).type('sin fresas')
     cy.wait(2000)
     cy.get('.add-or-next-step > .v-btn__content').click()
     cy.wait(1000)
@@ -453,7 +453,11 @@ describe('Find length and store in variable for usage in different tests', () =>
         })
       }
     }
+    //borrado de productos en el carrito
     cy.wait(2000)
     cy.visit('/')
+    cy.get('.relative > .car-container > .fas').click()
+    cy.get('.pt-2').click()
+    cy.get('.see-products').click()
   })
 })
