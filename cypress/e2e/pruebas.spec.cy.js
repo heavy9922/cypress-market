@@ -1,17 +1,17 @@
 describe('Find length and store in variable for usage in different tests', () => {
   let categorys
-  let cat = 0
-  let cat2 = 0
-  let cat3 = 0
+  let cat = 14
+  let cat2 = 5
+  let cat3 = 1
   let product
   let product2
   let product3
-  let pro = 0
-  let pro2 = 0
-  let pro3 = 0
+  let pro = 7
+  let pro2 = 3
+  let pro3 = 4
   let modifier = 1
-  let modifier2 = 0
-  let modifier3 = 0
+  let modifier2 = 1
+  let modifier3 = 2
   beforeEach(() => {
     cy.visit('/')
   })
@@ -215,7 +215,7 @@ describe('Find length and store in variable for usage in different tests', () =>
     cy.log(modifier2, 'modi2')
     cy.log(modifier3, 'modi3')
   })
-  it('page white', () => {
+  it.only('page white', () => {
     cy.wait(3000)
     //recoger en tienda
     cy.get('.underline > .v-btn__content').click()
@@ -594,5 +594,50 @@ describe('Find length and store in variable for usage in different tests', () =>
     }
     cy.wait(2000)
     cy.visit('/')
+    //login
+    let users = Cypress.env('username')
+    let passwd = Cypress.env('password')
+    cy.get('.button-user-icon > .v-btn__content > .fas').click()
+    cy.get(' :nth-child(1) >.v-list-item__title > a').click()
+    cy.get('#login-form > :nth-child(1)').type(users)
+    cy.get('#login-form > :nth-child(2)').type(passwd)
+    cy.get('.mt-1 > .v-btn__content').click()
+    cy.wait(2000)
+    // pedido
+    cy.get('.relative > .car-container > .fas').click()
+    cy.get(':nth-child(2) > .continue').click()
+    // TODO:parte 5
+    cy.log('inicio de la parte 5')
+    cy.get(
+      ':nth-child(4) > .v-stepper__wrapper > .card-body-step-content > .v-card__text > .v-form > .mt-4 > .blue-linear-gradient > .v-btn__content'
+    ).click()
+    cy.get('.mb-0 > .v-label').click()
+    cy.get(
+      ':nth-child(2) > .v-radio > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+    ).click()
+    cy.get(
+      '.sub-radio > :nth-child(1) > [style="height: auto;"] > .v-input--radio-group__input > :nth-child(2) > .py-0 > .v-input > .v-input__control > .v-input__slot'
+    ).type('121700')
+    cy.get(
+      '.electronic-bill > .v-input > .v-input__control > .v-input__slot > .v-input--radio-group__input > :nth-child(1) > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+    ).click()
+    cy.get(
+      '.electronic-bill > .v-input > .v-input__control > .v-input__slot > .v-input--radio-group__input > :nth-child(1) > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+    ).click()
+    //factura electronica
+    let address = Cypress.env('adress')
+    cy.get(':nth-child(3) > :nth-child(1) > .v-input').type('yeferson')
+    cy.get(':nth-child(3) > :nth-child(2) > .v-input').type('Bogota')
+    cy.get(':nth-child(3) > :nth-child(3) > .v-input').type(address)
+    cy.get(':nth-child(3) > :nth-child(4) > .v-input').type('3195393068')
+    cy.get(':nth-child(3) > :nth-child(5)').click()
+    cy.get(':nth-child(1) >.v-list-item__content').click()
+    cy.get(':nth-child(6) > .v-input').type('1033815760')
+    cy.get(':nth-child(7) > .v-input').type(
+      'yeferson.castiblanco@marketmix.com.co'
+    )
+    cy.get(
+      '.last-step-content > .v-stepper__wrapper > .card-body-step-content > .v-card__text > .v-form > .mt-4 > .blue-linear-gradient > .v-btn__content'
+    ).click()
   })
 })
