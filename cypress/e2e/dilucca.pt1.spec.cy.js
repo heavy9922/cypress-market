@@ -109,9 +109,13 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get(
       '.col.col-12 > .row > .col-sm-3 > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections'
     ).click()
-    cy.get('#list-item-291-0 > .v-list-item__content').click()
-    cy.get('#input-242').type(adress)
-    cy.get('#input-245').type(neighborhood)
+    cy.get(':nth-child(1) >.v-list-item__content').click()
+    cy.get(
+      '.col.col-12 > .row > .col-md-4 > .v-input > .v-input__control > .v-input__slot'
+    ).type(adress)
+    cy.get('.col-md-3 > .v-input > .v-input__control > .v-input__slot').type(
+      neighborhood
+    )
     cy.get(
       '.col.col-12 > .row > .hidden-sm-and-down > .trigger-search-wrapper > .search-desktop > .v-btn__content'
     ).click()
@@ -126,13 +130,8 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.get(
       '.mt-2 > .no-gutters > .col-sm-3 > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections'
     ).click()
-    cy.get('#list-item-291-0 > .v-list-item__content').click()
-    cy.get(
-      ':nth-child(3) > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections > .v-select__selection'
-    ).click()
-    cy.get(
-      '#list-item-306-0 > .v-list-item__content > .v-list-item__title'
-    ).click()
+    cy.wait(1000)
+    cy.get(':nth-child(1) > .v-list-item__content').click()
     cy.get(
       '.mt-2 > .no-gutters > .hidden-sm-and-down > .trigger-search-wrapper > .search-desktop > .v-btn__content'
     ).click()
@@ -141,7 +140,8 @@ describe('prueba de sitio web de Dilucca', () => {
   it('buscador o lupa PT1', () => {
     let find = Cypress.env('find')
     cy.get('.fade-search > .v-btn__content > .fas').click()
-    cy.get('#input-222').type(`${find}{enter}`)
+    cy.get('#input-226').type(`${find}{enter}`)
+    cy.wait(1000)
     cy.visit('/')
   })
 })
