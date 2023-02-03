@@ -215,7 +215,7 @@ describe('Find length and store in variable for usage in different tests', () =>
     cy.log(modifier2, 'modi2')
     cy.log(modifier3, 'modi3')
   })
-  it.only('page white', () => {
+  it('page white', () => {
     cy.wait(3000)
     //recoger en tienda
     cy.get('.underline > .v-btn__content').click()
