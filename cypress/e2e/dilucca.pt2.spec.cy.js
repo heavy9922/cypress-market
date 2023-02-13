@@ -1,6 +1,6 @@
 describe('prueba de sitio web de Dilucca', () => {
   let categorys
-  let cat 
+  let cat = 3
   let product
   let pro
   let modifier
@@ -30,7 +30,8 @@ describe('prueba de sitio web de Dilucca', () => {
     cat = parseInt(cat)
   })
   it('count product', () => {
-    cy.visit(pan[cat])
+    cy.log(pan[cat])
+    cy.visit(`${pan[cat]}`)
     cy.wait(2000)
     cy.get('body').then((body) => {
       cy.log(
@@ -67,6 +68,7 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.visit(`${pan[cat]}`)
     cy.wait(2000)
     if (pro !== 'not found product') {
+      cy.log(pros[pro])
       cy.visit(`${pros[pro]}`)
       cy.wait(2000)
       cy.get('body').then((body) => {
