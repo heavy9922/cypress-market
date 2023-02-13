@@ -5,7 +5,8 @@ module.exports = defineConfig({
   viewportHeight: 1080,
 
   e2e: {
-    baseUrl: 'https://www.diluccatogo.com/',
+    // TODO: No hay que dejar espacios en la url
+    baseUrl: 'https://pideenlinea.beerstation.com.co/',
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on('task', {
@@ -22,7 +23,7 @@ module.exports = defineConfig({
     ssl: 'https',
     titleSite: 'Di Lucca To Go - Inicio',
     BannersCount: 3,
-    username: 'prueba2@gmail.com',
+    username: 'prueba1@gmail.com',
     password: 'xxxxx1',
     urlFacebook: 'https://www.facebook.com/diluccatogo',
     urlInstagram: 'https://www.instagram.com/di_lucca_togo/',
