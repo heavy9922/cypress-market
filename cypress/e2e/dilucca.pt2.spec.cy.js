@@ -1,7 +1,5 @@
 describe('prueba de sitio web de Dilucca', () => {
-  let categorys
   let cat = 3
-  let product
   let pro
   let modifier
   let pan = []
@@ -34,11 +32,6 @@ describe('prueba de sitio web de Dilucca', () => {
     cy.visit(`${pan[cat]}`)
     cy.wait(2000)
     cy.get('body').then((body) => {
-      cy.log(
-        body.find(
-          '.v-responsive > .v-responsive__content > .group-product-card > .row > .combobox-details > a'
-        ).length, 'XD'
-      )
       if (
         body.find(
           '.v-responsive > .v-responsive__content > .group-product-card > .row > .combobox-details > a'
@@ -46,9 +39,31 @@ describe('prueba de sitio web de Dilucca', () => {
       ) {
         cy.get(
           '.v-responsive > .v-responsive__content > .group-product-card > .row > .combobox-details > a'
-        ).each(($el, list, $index) => {
+        ).each(($el, index, $list) => {
           let URL = $el.attr('href')
-          pros.push(URL)
+          let xd = URL.slice(URL, URL.length - 1)
+          if (xd === pan[cat]) {
+            cy.get('body').then((body) => {
+              cy.log(index, 'num')
+              let listPro = body
+                .find(
+                  `:nth-child(${
+                    index + 1
+                  }) > .v-responsive > .v-responsive__content > .group-product-card > .row > .pt-2 > a > .name_product`
+                )
+                .text()
+
+              cy.log(listPro, 'dentro del if')
+              listPro = listPro.toLowerCase()
+              listPro = listPro.trim()
+              let hola = listPro.split(' ').join('-')
+              let newUrl = xd.replace('categorias', 'productos')
+              URL = `${newUrl}/${hola}`
+              pros.push(URL)
+            })
+          } else {
+            pros.push(URL)
+          }
         })
       } else {
         cy.log('product not found')
@@ -172,13 +187,23 @@ describe('prueba de sitio web de Dilucca', () => {
           for (let i = 1; i <= modifier; i++) {
             cy.get('body').then((body) => {
               if (body.find(' #expansion-custom-header ').length > 0) {
-                cy.log('pan')
-                cy.get(`:nth-child(${i})> #expansion-custom-header`).click({
-                  multiple: true,
-                })
-                cy.get(
-                  '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
-                ).click({ multiple: true })
+                if (
+                  body.find(
+                    `:nth-child(${i})> [aria-expanded="true"] #expansion-custom-header `
+                  ).length > 0
+                ) {
+                  cy.get(
+                    '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+                  ).click({ multiple: true })
+                } else {
+                  cy.log('pan')
+                  cy.get(`:nth-child(${i})> #expansion-custom-header`).click({
+                    multiple: true,
+                  })
+                  cy.get(
+                    '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+                  ).click({ multiple: true })
+                }
                 // }
               } else if (
                 body.find('.combobox-details > :nth-child(3) > :nth-child(2) >')
@@ -212,6 +237,7 @@ describe('prueba de sitio web de Dilucca', () => {
                 if (
                   body.find('.add-or-next-step > .v-btn__content').length > 0
                 ) {
+                  cy.wait(1000)
                   cy.get('.add-or-next-step > .v-btn__content').click({
                     multiple: true,
                     force: true,
@@ -221,6 +247,7 @@ describe('prueba de sitio web de Dilucca', () => {
                     '[style="transform-origin: center top 0px;"] > .v-stepper__wrapper > .group-product-card-combo > .container > .bg-transparent > .combobox-details > .buttons-group > .add-or-next-step > .v-btn__content > .title'
                   ).length > 0
                 ) {
+                  cy.wait(1000)
                   cy.get(
                     '[style="transform-origin: center top 0px;"] > .v-stepper__wrapper > .group-product-card-combo > .container > .bg-transparent > .combobox-details > .buttons-group > .add-or-next-step > .v-btn__content > .title'
                   ).click()
