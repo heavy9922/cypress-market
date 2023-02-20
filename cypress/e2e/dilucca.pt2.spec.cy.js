@@ -1,9 +1,9 @@
 describe('prueba de sitio web de Dilucca', () => {
-  let cat = 3
-  let pro
-  let modifier
-  let pan = []
-  let pros = []
+  let cat,
+    pro,
+    modifier,
+    pan = [],
+    pros = []
   beforeEach(() => {
     cy.visit('/')
   })
@@ -37,6 +37,7 @@ describe('prueba de sitio web de Dilucca', () => {
           '.v-responsive > .v-responsive__content > .group-product-card > .row > .combobox-details > a'
         ).length > 0
       ) {
+        cy.log('entre')
         cy.get(
           '.v-responsive > .v-responsive__content > .group-product-card > .row > .combobox-details > a'
         ).each(($el, index, $list) => {
