@@ -60,9 +60,11 @@ describe('prueba de sitio web de Dilucca', () => {
               let hola = listPro.split(' ').join('-')
               let newUrl = xd.replace('categorias', 'productos')
               URL = `${newUrl}/${hola}`
+              cy.log(URL, 'finde url 1 ')
               pros.push(URL)
             })
           } else {
+            cy.log(URL, 'finde url')
             pros.push(URL)
           }
         })
@@ -82,6 +84,7 @@ describe('prueba de sitio web de Dilucca', () => {
   it('choose modifier', () => {
     // cy.wait(5000)
     cy.visit(`${pan[cat]}`)
+    cy.log(pro)
     cy.wait(2000)
     if (pro !== 'not found product') {
       cy.log(pros[pro])
