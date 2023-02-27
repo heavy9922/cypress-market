@@ -69,7 +69,7 @@ describe('prueba de sitio web de Dilucca', () => {
         cy.get(
           '.col.col-12 > .row > .col-sm-3 > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections'
         ).click()
-        cy.get('.v-list-item__title').click()
+        cy.get('.v-list-item__title').click({ multiple: true ,force: true})
         cy.get(
           '.col.col-12 > .row > .col-md-4 > .v-input > .v-input__control > .v-input__slot'
         ).type(adress)
@@ -284,7 +284,7 @@ describe('prueba de sitio web de Dilucca', () => {
         cy.get(
           '.col.col-12 > .row > .col-sm-3 > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections'
         ).click()
-        cy.get('.v-list-item__title').click()
+        cy.get('.v-list-item__title').click({ multiple: true, force: true})
         cy.get(
           '.col.col-12 > .row > .col-md-4 > .v-input > .v-input__control > .v-input__slot'
         ).type(adress)
@@ -428,7 +428,7 @@ describe('prueba de sitio web de Dilucca', () => {
         cy.get(
           '.col.col-12 > .row > .col-sm-3 > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections'
         ).click()
-        cy.get('.v-list-item__title').click()
+        cy.get('.v-list-item__title').click({ multiple: true, force: true})
         cy.get(
           '.col.col-12 > .row > .col-md-4 > .v-input > .v-input__control > .v-input__slot'
         ).type(adress)
@@ -447,16 +447,154 @@ describe('prueba de sitio web de Dilucca', () => {
       pan.length
     )
     //ir a categoria
-    cy.log(pan[cat])
-    cy.visit(pan[cat])
+    cy.log(pan[cat], 'url cat')
+    cy.visit(`${pan[cat]}`)
     //miga de pan
     cy.get('body').then((body) => {
       if (body.find('.v-breadcrumbs').length > 0) {
         cy.get('.v-breadcrumbs').should('exist').should('be.visible')
       }
     })
-    //nombre del producto
-    if (pro !== 'not found product') {
+    if (sub === 'not found subcategorys') {
+      //nombre del producto
+      if (pro !== 'not found product') {
+        cy.get(
+          `:nth-child(${pro}) > .v-responsive > .v-responsive__content > .group-product-card > .row > .combobox-details > a`
+        )
+          .should('exist')
+          .should('be.visible')
+        // boton de agregar
+        cy.get('body').then((body) => {
+          if (
+            body.find(
+              `:nth-child(${pro}) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > .pt-1 > .add-or-next-step`
+            ).length > 0
+          ) {
+            cy.get(
+              `:nth-child(${pro}) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > .pt-1 > .add-or-next-step`
+            )
+              .should('exist')
+              .should('be.visible')
+          } else {
+            cy.get(
+              `:nth-child(${pro}) > .v-responsive > .v-responsive__content > .group-product-card > .justify-center > .combobox-details > .v-card__actions > .row > :nth-child(2) > .buttons-group > .add-or-next-step`
+            )
+              .should('exist')
+              .should('be.visible')
+          }
+        })
+
+        cy.wait(1000)
+        cy.log('hola')
+        cy.get('body').then((body) => {
+          if (
+            body
+              .find(
+                `:nth-child(${pro}) > .product-category > :nth-child(2) > .group-product-card > .row > .pt-2 > .pt-1`
+              )
+              .text() != 'Agotado'
+          ) {
+            cy.log('entre')
+            cy.visit(`${pros[pro]}`)
+            cy.wait(2000)
+            cy.get('body').then((body) => {
+              if (body.find('.add-or-next-step > .v-btn__content').length > 0) {
+                cy.log('pan')
+                cy.get('.add-or-next-step > .v-btn__content').click({
+                  multiple: true,
+                  force: true,
+                })
+              } else if (
+                body.find(
+                  '[style="transform-origin: center top 0px;"] > .v-stepper__wrapper > .group-product-card-combo > .container > .bg-transparent > .combobox-details > .buttons-group > .add-or-next-step > .v-btn__content > .title'
+                ).length > 0
+              ) {
+                cy.get(
+                  '[style="transform-origin: center top 0px;"] > .v-stepper__wrapper > .group-product-card-combo > .container > .bg-transparent > .combobox-details > .buttons-group > .add-or-next-step > .v-btn__content > .title'
+                ).click({ multiple: true, force: true })
+              }
+            })
+            cy.wait(2000)
+            for (let i = 1; i <= modifier; i++) {
+              cy.get('body').then((body) => {
+                if (body.find(' #expansion-custom-header ').length > 0) {
+                  if (
+                    body.find(
+                      `:nth-child(${i})> [aria-expanded="true"] #expansion-custom-header `
+                    ).length > 0
+                  ) {
+                    cy.get(
+                      '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+                    ).click({ multiple: true })
+                  } else {
+                    cy.log('pan')
+                    cy.get(`:nth-child(${i})> #expansion-custom-header`).click({
+                      multiple: true,
+                    })
+                    cy.get(
+                      '.v-expansion-panel--active > .v-expansion-panel-content > .v-expansion-panel-content__wrap > :nth-child(1) > .pl-4 > .row > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-input--selection-controls__input > .v-input--selection-controls__ripple'
+                    ).click({ multiple: true })
+                  }
+                  // }
+                } else if (
+                  body.find(
+                    '.combobox-details > :nth-child(3) > :nth-child(2) >'
+                  ).length > 0
+                ) {
+                  cy.log('2')
+                  cy.get(
+                    `.combobox-details > :nth-child(3) > :nth-child(2) > :nth-child(${i})`
+                  ).click()
+                  cy.get('body').then((body) => {
+                    if (
+                      body.find(
+                        `#app > div.v-application--wrap > main > div > div > div > div.container.pa-0.container-products-screen.container--fluid > div:nth-child(3) > div > div.row.bg-transparent > div > div > div > div:nth-child(1) > div > div > div > div > div.combobox-details.detail-card.pl-7.pr-7.pt-7.col-sm-6.col-md-6.col-lg-6.col-xl-6.col-12 > div:nth-child(3) > div:nth-child(2) > :nth-child(${i})`
+                      ).length > 0 &&
+                      i < modifier
+                    ) {
+                      cy.get(`.v-list > :nth-child(1)`).click({ force: true })
+                    } else if (body.find('#list-707'.length > 0)) {
+                      cy.get('.v-list > :nth-child(1)').click({
+                        multiple: true,
+                        force: true,
+                      })
+                    }
+                  })
+                } else {
+                  cy.log('not found modifier')
+                }
+              })
+              if (modifier == i) {
+                cy.get('body').then((body) => {
+                  if (
+                    body.find('.add-or-next-step > .v-btn__content').length > 0
+                  ) {
+                    cy.wait(1000)
+                    cy.get('.add-or-next-step > .v-btn__content').click({
+                      multiple: true,
+                      force: true,
+                    })
+                  } else if (
+                    body.find(
+                      '[style="transform-origin: center top 0px;"] > .v-stepper__wrapper > .group-product-card-combo > .container > .bg-transparent > .combobox-details > .buttons-group > .add-or-next-step > .v-btn__content > .title'
+                    ).length > 0
+                  ) {
+                    cy.wait(1000)
+                    cy.get(
+                      '[style="transform-origin: center top 0px;"] > .v-stepper__wrapper > .group-product-card-combo > .container > .bg-transparent > .combobox-details > .buttons-group > .add-or-next-step > .v-btn__content > .title'
+                    ).click()
+                  }
+                })
+              }
+            }
+          }
+        })
+        // cy.wait(3000)
+        // cy.visit('/')
+      }
+    } else {
+      cy.visit(`${sub[sc]}`)
+      cy.wait(2000)
       cy.get(
         `:nth-child(${pro}) > .v-responsive > .v-responsive__content > .group-product-card > .row > .combobox-details > a`
       )
