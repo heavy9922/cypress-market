@@ -6,7 +6,7 @@ module.exports = defineConfig({
 
   e2e: {
     // TODO: No hay que dejar espacios en la url
-    baseUrl: 'https://pideenlinea.lenosycarbon.com.co/',
+    baseUrl: 'https://www.diluccatogo.com/',
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on('task', {
